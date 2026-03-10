@@ -62,7 +62,11 @@
 запросы и ответы со стороны сервиса для **всех** его операций.
 
 #### Демонстрация работы
-todo
+<img src="images/add.jpg" width=500 />
+<img src="images/list_products.jpg" width=500 />
+<img src="images/fetch.jpg" width=500 />
+<img src="images/delete.jpg" width=500 />
+<img src="images/list_products2.jpg" width=500 />
 
 ### Задание В (4 балла)
 Пусть ваш продукт также имеет иконку (небольшую картинку). Формат иконки (картинки) может
