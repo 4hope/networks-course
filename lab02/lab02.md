@@ -88,7 +88,8 @@
 ```
 
 #### Демонстрация работы
-todo
+<img src="images/post image.jpg" width=500 />
+<img src="images/get image.jpg" width=500 />
 
 ---
 
