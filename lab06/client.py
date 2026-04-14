@@ -1,4 +1,4 @@
-from ftplib import FTP, error_perm
+from ftplib import FTP
 import os
 
 
@@ -29,8 +29,8 @@ class FTPClientApp:
                 return
             for item in items:
                 print(item)
-        except Exception:
-            print("Не удалось получить список файлов")
+        except Exception as e:
+            print("Не удалось получить список файлов:", repr(e))
 
     def upload_file(self, local_path: str, remote_filename: str | None = None) -> None:
         if not os.path.isfile(local_path):
@@ -44,8 +44,8 @@ class FTPClientApp:
             with open(local_path, "rb") as file:
                 self.ftp.storbinary(f"STOR {remote_filename}", file)
             print("Файл загружен")
-        except Exception:
-            print("Ошибка загрузки файла")
+        except Exception as e:
+            print("Ошибка загрузки файла:", repr(e))
 
     def download_file(self, remote_filename: str, local_path: str | None = None) -> None:
         if local_path is None:
@@ -56,22 +56,26 @@ class FTPClientApp:
                 self.ftp.retrbinary(f"RETR {remote_filename}", file.write)
             print("Файл скачан")
         except Exception as e:
-            print("Ошибка скачивания файла", repr(e))
+            print("Ошибка скачивания файла:", repr(e))
 
 
 def main():
-    host = input("Хост: ").strip() or "ftp.dlptest.com"
+    host = input("Хост: ").strip() or "127.0.0.1"
     port_input = input("Порт: ").strip()
     port = int(port_input) if port_input else 21
-    username = input("Логин: ").strip() or "dlpuser"
-    password = input("Пароль: ").strip() or "rNrKYTX9g7z3RgJRmxWuGHbeu"
+    username = input("Логин: ").strip() or "TestUser"
+    password = input("Пароль: ").strip() or "0000"
 
     app = FTPClientApp(host, port, username, password)
 
     try:
         app.connect()
         print("Подключение выполнено")
+    except Exception as e:
+        print("Не удалось подключиться к серверу:", repr(e))
+        return
 
+    try:
         while True:
             print("\n1 - Список файлов")
             print("2 - Загрузить файл")
@@ -93,10 +97,7 @@ def main():
             elif choice == "4":
                 break
             else:
-                print("Неизвестная команда.")
-
-    except Exception:
-        print("Не удалось подключиться к серверу.")
+                print("Неизвестная команда")
     finally:
         app.disconnect()
 
